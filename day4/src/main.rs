@@ -4,12 +4,17 @@ use std::io::prelude::*;
 
 fn main() {
     let mut count = 0;
+    let mut count2 = 0;
     for row in split_input(get_input()) {
-        if part1(row) {
+        if part1(row.clone()) {
             count += 1;
+        }
+        if part2(row) {
+            count2 += 1;
         }
     }
     println!("count part1: {:?}", count);
+    println!("count part2: {:?}", count2);
 }
 
 fn part1(row: Vec<String>) -> bool {
@@ -46,6 +51,15 @@ fn split_input(input: Vec<String>) -> Vec<Vec<String>>{
     output
 }
 
-fn is_anagram() {
-    unimplemented!();
+fn part2(row: Vec<String>) -> bool {
+    let mut words: HashMap<Vec<char>, bool> = HashMap::new();
+    for word in row {
+        let mut tmp_word: Vec<char> = word.chars().collect();
+        tmp_word.sort();
+        if words.contains_key(&tmp_word) {
+            return false;
+        }
+        words.insert(tmp_word, true);
+    }
+    true
 }
